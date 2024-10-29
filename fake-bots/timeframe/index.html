@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swell</title>
+    <style>
+        /* Center the container on the page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* Task container styling */
+        .tasks {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            max-width: 320px;
+        }
+
+        /* Individual task styling */
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Animation on hover */
+        .task:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Icon styling */
+        .task img {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            padding: 5px;
+        }
+
+        /* Task name text styling */
+        .task .name {
+            flex-grow: 1;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333333;
+            text-align: left;
+        }
+
+        /* Button styling */
+        .task a {
+            color: #ffffff;
+            background-color: #007bff;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Button hover effect */
+        .task a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tasks" id="task-container">
+        <div class="task" data-task="time-frame">
+            <img src="https://miro.medium.com/v2/resize:fit:400/1*_MXG8RkU2mp3iCTTeRpmOg.png" alt="Telegram Icon">
+            <div class="name">Time Frame</div>
+            <a href="https://t.me/TimeFarmCryptoBot?start=12KbWT3tifYa8Ana0"
+                onclick="completeTask('time-frame')">Open</a>
+        </div>
+
+        <!-- Iframe for redirect after tasks completion -->
+        <!-- <iframe id="redirect-iframe" src="https://app.swellnetwork.io/stake/rsweth"></iframe> -->
+
+        <script>
+            // Function to mark task as complete and save it in localStorage
+            function completeTask(taskName) {
+                localStorage.setItem(taskName, 'completed');
+                checkTasks();
+            }
+
+            // Function to check all tasks and update UI
+            function checkTasks() {
+                const tasks = document.querySelectorAll('.task');
+                let allCompleted = true;
+
+                tasks.forEach(task => {
+                    const taskName = task.getAttribute('data-task');
+                    if (localStorage.getItem(taskName) === 'completed') {
+                        task.style.display = 'none';
+                    } else {
+                        allCompleted = false;
+                        console.log('note');
+                    }
+                });
+
+                // If all tasks are completed, show the redirect iframe
+                if (allCompleted) {
+                    document.getElementById('task-container').style.display = 'none';
+                    // document.getElementById('redirect-iframe').style.display = 'block';
+                    window.location.href = 'https://app.swellnetwork.io/stake/rsweth';
+                }
+            }
+
+            // Check tasks on page load
+            document.addEventListener('DOMContentLoaded', checkTasks);
+        </script>
+</body>
+
+</html>
